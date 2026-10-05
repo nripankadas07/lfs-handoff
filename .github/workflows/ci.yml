@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.12", "3.14"]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install .
+      - run: python -m unittest -v
+      - run: python -m compileall -q lfs_handoff.py
+      - run: lfs-handoff --help
+      - name: Installed standalone demo
+        run: |
+          cp demo.py "$RUNNER_TEMP/lfs-handoff-demo.py"
+          cd "$RUNNER_TEMP"
+          python "lfs-handoff-demo.py"
