@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "lfs-handoff"
+version = "0.1.0"
+description = "Read-only offline Git LFS handoff verification of pointer sizes and SHA-256 objects."
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+readme = "README.md"
+dependencies = []
+[project.scripts]
+lfs-handoff = "lfs_handoff:main"
+[tool.setuptools]
+py-modules = ["lfs_handoff"]
